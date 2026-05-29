@@ -5,16 +5,12 @@ This project was created for an INST 327 team database project focused on diabet
 
 The project includes database modeling, SQL queries, database backups, and a final written report explaining the overall system design and implementation.
 
----
-
 ## Features
 - Relational database design
 - SQL database backup
 - Custom SQL queries
 - Database schema and logical model
 - Final project documentation
-
----
 
 ## Files Included
 
@@ -32,8 +28,6 @@ Image version of the database schema and logical model.
 
 ### `team_8_diabetes_report.pdf`
 Final written report explaining the project design, implementation, and analysis.
-
----
 
 ## Tools Used
 - MySQL
