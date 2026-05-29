@@ -1,4 +1,5 @@
 # Diabetes Database Project
+A team database project focused on organizing and analyzing diabetes-related healthcare data. The project involved designing a relational database, creating SQL queries, and developing reports to better manage and understand patient information and trends.
 
 ## Overview
 This project was created for an INST 327 team database project focused on diabetes-related healthcare data. The goal of the project was to design and implement a relational database that could efficiently organize, manage, and analyze patient and healthcare information.
