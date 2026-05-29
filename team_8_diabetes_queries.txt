@@ -1,0 +1,84 @@
+﻿/*Views as queries for diabetesDB*/
+
+-- 1 (A & C)
+USE diabetesDB;
+DROP VIEW IF EXISTS average_age_by_db_type;
+CREATE VIEW average_age_by_db_type AS
+SELECT
+	p.diabetes_type,
+AVG(pi.patient_age) AS avg_patient_age
+FROM patients p
+JOIN patient_physical_info pi
+	ON p.physical_info_id = pi.physical_info_id
+GROUP BY p.diabetes_type;
+
+-- 2 (A & D)
+USE diabetesDB;
+DROP VIEW IF EXISTS patients_and_their_health_metrics;
+CREATE VIEW patients_and_their_health_metrics AS
+SELECT
+	p.patient_id,
+hm.metric_name,
+hm.metric_value
+FROM patients p
+JOIN patients_has_patient_health_metrics phm
+	ON p.patient_id = phm.patient_id
+JOIN patient_health_metrics hm
+	ON phm.health_metrics_id = hm.health_metrics_id;
+
+-- 3 (A & B & C & E)
+USE diabetesDB;
+DROP VIEW IF EXISTS patients_above_average_bmi;
+CREATE VIEW patients_above_average_bmi AS
+SELECT
+	p.patient_id,
+hm.metric_value AS bmi_value
+FROM patients p
+JOIN patients_has_patient_health_metrics phm
+	ON phm.patient_id = p.patient_id
+JOIN patient_health_metrics hm
+	ON phm.health_metrics_id = hm.health_metrics_id
+WHERE hm.metric_name = 'BMI'
+	AND hm.metric_value >
+		(SELECT AVG(metric_value)
+FROM patient_health_metrics
+WHERE metric_name = 'BMI');
+
+-- 4 (A & B & C)
+USE diabetesDB;
+DROP VIEW IF EXISTS test_count_by_diabetes_type;
+CREATE VIEW test_count_by_diabetes_type AS
+SELECT
+p.diabetes_type,
+COUNT(pt.test_id) AS total_tests
+FROM patients p
+JOIN patient_tests pt
+ON p.test_id = pt.test_id
+WHERE p.diabetes_type IS NOT NULL
+GROUP BY p.diabetes_type;
+
+-- 5 (A & B)
+USE diabetesDB;
+DROP VIEW IF EXISTS patient_demographics_lifestyle;
+CREATE VIEW patient_demographics_lifestyle AS
+SELECT
+p.patient_id,
+p.diabetes_type,
+pi.patient_age,
+pe.ethnicity_risk,
+li.alcohol_consumption,
+li.smoking_status
+FROM patients p
+JOIN patient_physical_info pi
+ON p.physical_info_id = pi.physical_info_id
+JOIN patient_ethnicity pe
+ON pi.ethnicity_id = pe.ethnicity_id
+JOIN lifestyle_info li
+ON p.lifestyle_id = li.lifestyle_id
+WHERE li.smoking_status = 'Non-Smoker';
+
+
+
+
+
+
